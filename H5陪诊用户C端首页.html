@@ -1,0 +1,368 @@
+
+<!DOCTYPE html>
+
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>DIDI陪诊 - 专业医疗陪护服务</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://code.iconify.design/3/3.1.1/iconify.min.js"></script>
+<style>
+    .hide-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+    .hide-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+    @keyframes slideUp {
+      from { transform: translateY(100%); }
+      to { transform: translateY(0); }
+    }
+    .animate-slide-up {
+      animation: slideUp 0.3s ease-out;
+    }
+  </style>
+</head>
+<body class="bg-slate-50 flex justify-center items-start min-h-screen">
+<!-- APP容器 (375x812) -->
+<div class="w-[375px] h-[812px] bg-white shadow-2xl relative overflow-hidden flex flex-col border border-gray-100 rounded-[2.5rem]">
+<!-- 顶部状态栏模拟 -->
+<div class="flex justify-between items-center px-8 pt-6 pb-2 text-xs font-semibold text-gray-800 shrink-0">
+<span>9:41</span>
+<div class="flex gap-1.5 items-center">
+<span class="iconify" data-icon="material-symbols:signal-cellular-4-bar-rounded"></span>
+<span class="iconify" data-icon="material-symbols:wifi"></span>
+<span class="iconify" data-icon="material-symbols:battery-very-low-outline-rounded" data-rotate="90deg"></span>
+</div>
+</div>
+<!-- 标题栏 (56px) -->
+<header class="h-14 flex items-center justify-between px-4 shrink-0 border-b border-gray-50 bg-white/80 backdrop-blur-md sticky top-0 z-20">
+<div class="flex items-center gap-2">
+<div class="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center text-white">
+<span class="iconify" data-icon="medical-icon:i-care-staff-area" data-width="20"></span>
+</div>
+<h1 class="font-bold text-gray-800">DIDI 陪诊</h1>
+</div>
+<button class="relative p-2" onclick="toggleMenu('loginModal')">
+<span class="iconify text-gray-500" data-icon="solar:user-circle-bold" data-width="24"></span>
+</button>
+</header>
+<!-- 主体内容区 (676px) -->
+<main class="flex-1 overflow-y-auto hide-scrollbar bg-slate-50">
+<!-- Banner 轮播模拟 -->
+<section class="p-4">
+<div class="w-full h-36 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-2xl relative overflow-hidden p-6 text-white group">
+<div class="relative z-10">
+<h2 class="text-xl font-bold mb-1">专业陪诊，温情守护</h2>
+<p class="text-xs opacity-90">让每一位患者都不再孤单面对就医</p>
+<button class="mt-4 bg-white/20 backdrop-blur-sm border border-white/30 text-xs px-4 py-1.5 rounded-full hover:bg-white/30 transition-all">了解详情</button>
+</div>
+<span class="iconify absolute -right-4 -bottom-4 text-white/10" data-icon="material-symbols:medical-services" data-width="120"></span>
+</div>
+</section>
+<!-- 核心服务分类 -->
+<section class="grid grid-cols-4 gap-4 px-4 py-2">
+<div class="flex flex-col items-center gap-1.5">
+<div class="w-12 h-12 bg-blue-100 rounded-2xl flex items-center justify-center text-blue-600">
+<span class="iconify" data-icon="solar:medical-kit-bold" data-width="24"></span>
+</div>
+<span class="text-[11px] text-gray-600">普通陪诊</span>
+</div>
+<div class="flex flex-col items-center gap-1.5">
+<div class="w-12 h-12 bg-purple-100 rounded-2xl flex items-center justify-center text-purple-600">
+<span class="iconify" data-icon="solar:hospital-bold" data-width="24"></span>
+</div>
+<span class="text-[11px] text-gray-600">专业陪护</span>
+</div>
+<div class="flex flex-col items-center gap-1.5">
+<div class="w-12 h-12 bg-orange-100 rounded-2xl flex items-center justify-center text-orange-600">
+<span class="iconify" data-icon="solar:alarm-add-bold" data-width="24"></span>
+</div>
+<span class="text-[11px] text-gray-600">急诊陪伴</span>
+</div>
+<div class="flex flex-col items-center gap-1.5" onclick="toggleMenu('advancedFilter')">
+<div class="w-12 h-12 bg-emerald-100 rounded-2xl flex items-center justify-center text-emerald-600 animate-pulse">
+<span class="iconify" data-icon="solar:tuning-square-2-bold" data-width="24"></span>
+</div>
+<span class="text-[11px] text-emerald-600 font-medium">高级选项</span>
+</div>
+</section>
+<!-- 热门推荐 -->
+<section class="mt-6 px-4">
+<div class="flex justify-between items-end mb-4">
+<h3 class="font-bold text-gray-800 text-base">优选陪护师</h3>
+<span class="text-xs text-blue-600">查看更多</span>
+</div>
+<div class="space-y-3">
+<!-- 推荐项1 -->
+<div class="bg-white p-3 rounded-xl shadow-sm flex gap-3 items-center border border-gray-100/50">
+<img alt="Nurse avatar" class="w-14 h-14 rounded-lg object-cover bg-gray-100" id="1" src="https://modao.cc/agent-py/media/generated_images/2025-12-24/6a338ca2befd47c49206dfcd86faab14.jpg"/>
+<div class="flex-1">
+<div class="flex justify-between items-start">
+<h4 class="font-bold text-gray-800 text-sm">陈悦 医生助理</h4>
+<div class="flex items-center text-amber-500 text-[10px] bg-amber-50 px-1.5 py-0.5 rounded">
+<span class="iconify mr-0.5" data-icon="material-symbols:star-rounded"></span>4.9
+                </div>
+</div>
+<p class="text-[11px] text-gray-500 mt-1">擅长：心血管内科、诊后指导</p>
+<div class="mt-2 flex gap-2">
+<span class="text-[10px] bg-slate-100 text-slate-600 px-2 py-0.5 rounded">服务500+</span>
+<span class="text-[10px] bg-blue-50 text-blue-600 px-2 py-0.5 rounded">认证护工</span>
+</div>
+</div>
+</div>
+<!-- 推荐项2 -->
+<div class="bg-white p-3 rounded-xl shadow-sm flex gap-3 items-center border border-gray-100/50">
+<img alt="Nurse avatar" class="w-14 h-14 rounded-lg object-cover bg-gray-100" id="2" src="https://modao.cc/agent-py/media/generated_images/2025-12-24/1b892345801d4f7188dfb5cddf844c0f.jpg"/>
+<div class="flex-1">
+<div class="flex justify-between items-start">
+<h4 class="font-bold text-gray-800 text-sm">王伟 专业陪诊</h4>
+<div class="flex items-center text-amber-500 text-[10px] bg-amber-50 px-1.5 py-0.5 rounded">
+<span class="iconify mr-0.5" data-icon="material-symbols:star-rounded"></span>4.8
+                </div>
+</div>
+<p class="text-[11px] text-gray-500 mt-1">擅长：老年科、异地代办挂号</p>
+<div class="mt-2 flex gap-2">
+<span class="text-[10px] bg-slate-100 text-slate-600 px-2 py-0.5 rounded">服务800+</span>
+<span class="text-[10px] bg-blue-50 text-blue-600 px-2 py-0.5 rounded">资深资质</span>
+</div>
+</div>
+</div>
+<!-- 推荐项3 -->
+<div class="bg-white p-3 rounded-xl shadow-sm flex gap-3 items-center border border-gray-100/50">
+<img alt="Nurse avatar" class="w-14 h-14 rounded-lg object-cover bg-gray-100" id="3" src="https://modao.cc/agent-py/media/generated_images/2025-12-24/808a4340707f40d9a25961cddd1cb071.jpg"/>
+<div class="flex-1">
+<div class="flex justify-between items-start">
+<h4 class="font-bold text-gray-800 text-sm">林木木 护士</h4>
+<div class="flex items-center text-amber-500 text-[10px] bg-amber-50 px-1.5 py-0.5 rounded">
+<span class="iconify mr-0.5" data-icon="material-symbols:star-rounded"></span>5.0
+                </div>
+</div>
+<p class="text-[11px] text-gray-500 mt-1">擅长：儿科陪护、输液看护</p>
+<div class="mt-2 flex gap-2">
+<span class="text-[10px] bg-slate-100 text-slate-600 px-2 py-0.5 rounded">服务300+</span>
+<span class="text-[10px] bg-blue-50 text-blue-600 px-2 py-0.5 rounded">平台推荐</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- 服务承诺 -->
+<section class="mt-6 mb-10 px-4">
+<div class="bg-white rounded-xl p-4 flex justify-around border border-gray-100">
+<div class="flex flex-col items-center gap-1">
+<span class="iconify text-blue-500" data-icon="icon-park-solid:degree-hat" data-width="18"></span>
+<span class="text-[10px] text-gray-500">持证上岗</span>
+</div>
+<div class="flex flex-col items-center gap-1">
+<span class="iconify text-blue-500" data-icon="solar:shield-check-bold text-blue-500" data-width="18"></span>
+<span class="text-[10px] text-gray-500">平台担保</span>
+</div>
+<div class="flex flex-col items-center gap-1">
+<span class="iconify text-blue-500" data-icon="solar:bill-list-bold text-blue-500" data-width="18"></span>
+<span class="text-[10px] text-gray-500">价格透明</span>
+</div>
+<div class="flex flex-col items-center gap-1">
+<span class="iconify text-blue-500" data-icon="solar:hand-stars-bold text-blue-500" data-width="18"></span>
+<span class="text-[10px] text-gray-500">温情服务</span>
+</div>
+</div>
+</section>
+</main>
+<!-- 底部导航栏 (80px) -->
+<footer class="h-20 bg-white border-t border-gray-50 flex items-center justify-around px-2 shrink-0">
+<div class="flex flex-col items-center text-blue-600 gap-1">
+<span class="iconify" data-icon="solar:home-smile-angle-bold" data-width="24"></span>
+<span class="text-[10px] font-medium">首页</span>
+</div>
+<div class="flex flex-col items-center text-gray-400 gap-1" onclick="toggleMenu('orderList')">
+<span class="iconify" data-icon="solar:clipboard-list-bold" data-width="24"></span>
+<span class="text-[10px]">订单</span>
+</div>
+<div class="flex flex-col items-center text-gray-400 gap-1">
+<span class="iconify" data-icon="solar:chat-round-line-bold" data-width="24"></span>
+<span class="text-[10px]">咨询</span>
+</div>
+<div class="flex flex-col items-center text-gray-400 gap-1">
+<span class="iconify" data-icon="solar:user-bold" data-width="24"></span>
+<span class="text-[10px]">我的</span>
+</div>
+</footer>
+<!-- 高级选项 - 弹层模式 -->
+<div class="hidden absolute inset-0 bg-black/40 z-50 flex flex-col justify-end" id="advancedFilter">
+<div class="bg-white h-[90%] rounded-t-3xl animate-slide-up flex flex-col">
+<header class="p-5 flex justify-between items-center border-b shrink-0">
+<h3 class="text-lg font-bold">高级预约设置</h3>
+<button class="text-gray-400" onclick="toggleMenu('advancedFilter')">
+<span class="iconify" data-icon="material-symbols:close-rounded" data-width="24"></span>
+</button>
+</header>
+<div class="flex-1 overflow-y-auto p-5 space-y-6">
+<!-- 细分选项1: 地点 -->
+<div class="space-y-3">
+<h4 class="font-bold flex items-center gap-2"><span class="w-1.5 h-1.5 bg-blue-500 rounded-full"></span>地点选项</h4>
+<div class="grid grid-cols-3 gap-3">
+<button class="bg-blue-50 border border-blue-500 text-blue-600 py-2 rounded-lg text-xs">中心城区</button>
+<button class="bg-gray-50 border border-transparent text-gray-600 py-2 rounded-lg text-xs">县郊区域</button>
+<button class="bg-gray-50 border border-transparent text-gray-600 py-2 rounded-lg text-xs">乡镇街道</button>
+</div>
+</div>
+<!-- 细分选项2: 医院等级 -->
+<div class="space-y-3">
+<h4 class="font-bold flex items-center gap-2"><span class="w-1.5 h-1.5 bg-blue-500 rounded-full"></span>医院等级</h4>
+<div class="grid grid-cols-3 gap-3">
+<button class="bg-blue-50 border border-blue-500 text-blue-600 py-2 rounded-lg text-xs">三甲医院</button>
+<button class="bg-gray-50 border border-transparent text-gray-600 py-2 rounded-lg text-xs">二级医院</button>
+<button class="bg-gray-50 border border-transparent text-gray-600 py-2 rounded-lg text-xs">基层诊所</button>
+</div>
+</div>
+<!-- 细分选项3: 科目 -->
+<div class="space-y-3">
+<h4 class="font-bold flex items-center gap-2"><span class="w-1.5 h-1.5 bg-blue-500 rounded-full"></span>科室选择</h4>
+<div class="grid grid-cols-3 gap-3">
+<button class="bg-gray-50 py-2 rounded-lg text-xs">内科系列</button>
+<button class="bg-gray-50 py-2 rounded-lg text-xs">外科系列</button>
+<button class="bg-gray-50 py-2 rounded-lg text-xs">急诊科</button>
+<button class="bg-gray-50 py-2 rounded-lg text-xs">儿科/妇科</button>
+<button class="bg-gray-50 py-2 rounded-lg text-xs">康复中医</button>
+</div>
+</div>
+<!-- 细分选项4: 预算 -->
+<div class="space-y-3">
+<h4 class="font-bold flex items-center gap-2"><span class="w-1.5 h-1.5 bg-blue-500 rounded-full"></span>收费价位(元/次)</h4>
+<div class="grid grid-cols-3 gap-3">
+<button class="bg-gray-50 py-2 rounded-lg text-xs">10 - 100</button>
+<button class="bg-gray-50 py-2 rounded-lg text-xs">100 - 200</button>
+<button class="bg-gray-50 py-2 rounded-lg text-xs">200以上</button>
+</div>
+</div>
+</div>
+<div class="p-5 bg-white border-t shrink-0">
+<button class="w-full bg-blue-600 text-white py-4 rounded-xl font-bold shadow-lg shadow-blue-200" onclick="mockCreateOrder()">去审核并寻找匹配项</button>
+</div>
+</div>
+</div>
+<!-- 登录模块 -->
+<div class="hidden absolute inset-0 bg-black/60 z-[60] flex items-center justify-center px-6" id="loginModal">
+<div class="bg-white w-full rounded-2xl p-6 relative">
+<button class="absolute right-4 top-4 text-gray-400" onclick="toggleMenu('loginModal')"><span class="iconify" data-icon="material-symbols:close"></span></button>
+<h3 class="text-xl font-bold text-center mb-6">快捷登录</h3>
+<div class="space-y-4">
+<div class="relative">
+<input class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 outline-none focus:border-blue-500 transition-all text-sm" placeholder="手机号" type="text"/>
+</div>
+<div class="flex gap-2">
+<input class="flex-1 bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 outline-none focus:border-blue-500 transition-all text-sm" placeholder="验证码" type="text"/>
+<button class="px-4 bg-slate-100 text-blue-600 rounded-xl font-medium text-xs whitespace-nowrap">获取验证码</button>
+</div>
+<button class="w-full bg-blue-600 text-white py-3 rounded-xl font-bold mt-4" onclick="toggleMenu('loginModal')">立即进入</button>
+<p class="text-[10px] text-gray-400 text-center px-4">登录即表示同意《用户服务协议》及《隐私权政策》</p>
+</div>
+</div>
+</div>
+<!-- 支付弹窗流程模拟 -->
+<div class="hidden absolute inset-0 bg-black/80 z-[70] flex flex-col justify-center items-center p-6" id="payModal">
+<div class="bg-white w-full max-w-[300px] rounded-3xl p-6 flex flex-col items-center animate-slide-up">
+<h4 class="font-bold text-lg mb-2">微信支付</h4>
+<p class="text-2xl font-bold text-gray-800 mb-6">¥ 198.00</p>
+<div class="p-3 bg-slate-50 rounded-xl mb-6 relative">
+<div class="w-40 h-40 bg-white grid place-items-center border-4 border-slate-100 opacity-80">
+<span class="iconify text-slate-300" data-icon="lucide:qr-code" data-width="120"></span>
+</div>
+<!-- 模拟扫描线 -->
+<div class="absolute inset-x-3 top-3 h-0.5 bg-emerald-500 shadow-[0_0_10px_#10b981] animate-[pulse_2s_infinite]"></div>
+</div>
+<p class="text-xs text-gray-400 mb-6">支付成功后将自动转入服务详情</p>
+<button class="w-full py-3 bg-emerald-500 text-white font-bold rounded-xl active:scale-95 transition-all" onclick="successPay()">模拟支付完成</button>
+</div>
+</div>
+<!-- 订单列表模拟层 -->
+<div class="hidden absolute inset-0 bg-white z-[40] flex flex-col pt-14" id="orderList">
+<header class="h-14 flex items-center px-4 border-b absolute top-0 w-full bg-white">
+<button class="mr-4" onclick="toggleMenu('orderList')">
+<span class="iconify text-gray-600" data-icon="material-symbols:arrow-back-ios-new" data-width="20"></span>
+</button>
+<h3 class="font-bold text-gray-800">我的订单</h3>
+</header>
+<div class="flex-1 overflow-y-auto bg-slate-50 p-4 space-y-4">
+<div class="bg-white p-4 rounded-xl border border-gray-100">
+<div class="flex justify-between items-center mb-3">
+<span class="text-xs text-gray-400">订单号：202512248892</span>
+<span class="text-xs text-emerald-500 font-bold">进行中</span>
+</div>
+<div class="flex gap-3">
+<img alt="Nurse avatar" class="w-12 h-12 rounded-lg bg-gray-100" id="4" src="https://modao.cc/agent-py/media/generated_images/2025-12-24/f28572253ee5470b8185ead46e4b02de.jpg"/>
+<div>
+<p class="font-bold text-sm">专业陪诊 - 三甲医院专项</p>
+<p class="text-[11px] text-gray-500">2025-12-24 14:00 | 护工：陈悦</p>
+</div>
+</div>
+</div>
+<div class="bg-white p-4 rounded-xl border border-gray-100 opacity-60">
+<div class="flex justify-between items-center mb-3">
+<span class="text-xs text-gray-400">订单号：202512231204</span>
+<span class="text-xs text-gray-400 font-bold">已完成</span>
+</div>
+<div class="flex gap-3">
+<img alt="Nurse avatar" class="w-12 h-12 rounded-lg bg-gray-100" id="5" src="https://modao.cc/agent-py/media/generated_images/2025-12-24/6920643cc5cd42d9a3e3645b6b9db22d.jpg"/>
+<div>
+<p class="font-bold text-sm">急诊陪伴服务</p>
+<p class="text-[11px] text-gray-500">2025-12-23 10:30 | 护工：王伟</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<script>
+    function toggleMenu(id) {
+      const el = document.getElementById(id);
+      if (el.classList.contains('hidden')) {
+          el.classList.remove('hidden');
+      } else {
+          el.classList.add('hidden');
+      }
+    }
+
+    function mockCreateOrder() {
+        // 关闭高级筛选
+        document.getElementById('advancedFilter').classList.add('hidden');
+        // 显示一个简单的加载反馈（模拟审核寻找符合项）
+        const btn = document.createElement('div');
+        btn.id = 'loadingToast';
+        btn.className = 'absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-black/70 text-white px-6 py-4 rounded-2xl flex flex-col items-center gap-3 z-[100]';
+        btn.innerHTML = `
+            <span class="iconify animate-spin" data-icon="solar:loading-outline" data-width="32"></span>
+            <span class="text-sm">正在审核匹配...</span>
+        `;
+        document.querySelector('.w-\\[375px\\]').appendChild(btn);
+
+        setTimeout(() => {
+            btn.innerHTML = `
+                <span class="iconify text-emerald-400" data-icon="solar:check-read-linear" data-width="32"></span>
+                <span class="text-sm">找到符合项目！</span>
+            `;
+            setTimeout(() => {
+                btn.remove();
+                document.getElementById('payModal').classList.remove('hidden');
+            }, 1000);
+        }, 1500);
+    }
+
+    function successPay() {
+        document.getElementById('payModal').classList.add('hidden');
+        const toast = document.createElement('div');
+        toast.className = 'absolute bottom-24 left-1/2 -translate-x-1/2 bg-emerald-500 text-white px-8 py-3 rounded-full shadow-xl z-[100] animate-slide-up text-sm font-bold';
+        toast.innerHTML = '支付成功，已为您生成订单';
+        document.querySelector('.w-\\[375px\\]').appendChild(toast);
+        
+        setTimeout(() => {
+            toast.remove();
+            toggleMenu('orderList');
+        }, 2000);
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,367 @@
+
+<!DOCTYPE html>
+
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>医疗子预约系统 - 2025</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://code.iconify.design/3/3.1.1/iconify.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
+<style>
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .hide-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-fade-in {
+            animation: fadeIn 0.3s ease-out forwards;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 font-sans text-gray-900 overflow-x-hidden">
+<!-- 顶栏 -->
+<header class="fixed top-0 left-0 right-0 h-16 bg-white border-b border-gray-200 flex items-center justify-between px-6 z-50">
+<div class="flex items-center gap-2">
+<div class="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center">
+<span class="iconify text-white text-xl" data-icon="solar:health-bold"></span>
+</div>
+<span class="text-xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent italic">MedLink</span>
+</div>
+<div class="flex items-center gap-4">
+<div class="flex flex-col items-end hidden sm:flex">
+<span class="text-sm font-semibold">林医生助理</span>
+<span class="text-xs text-gray-500">2025年12月24日</span>
+</div>
+<div class="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center border-2 border-white shadow-sm overflow-hidden">
+<img alt="Doctor Assistant Avatar" class="w-full h-full object-cover" id="img-1" src="https://modao.cc/agent-py/media/generated_images/2025-12-24/6bdfb60d6db146f0925149526b82c1b0.jpg"/>
+</div>
+</div>
+</header>
+<!-- 主容器 -->
+<main class="pt-20 pb-16 min-h-screen max-w-[1440px] mx-auto px-4 lg:px-6" id="app-container">
+<!-- 子预约主页 (Step 1) -->
+<section class="animate-fade-in space-y-6" id="step-1">
+<div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 flex flex-col md:flex-row items-center gap-6">
+<div class="relative">
+<div class="w-24 h-24 rounded-2xl overflow-hidden bg-gray-100 ring-4 ring-blue-50">
+<img alt="Patient Avatar" class="w-full h-full object-cover" id="img-2" src="https://modao.cc/agent-py/media/generated_images/2025-12-24/46663e23af1c44c3b6820337fece0854.jpg"/>
+</div>
+<span class="absolute -bottom-2 -right-2 bg-green-500 text-white p-1 rounded-lg text-xs font-bold border-2 border-white">在线</span>
+</div>
+<div class="flex-1 text-center md:text-left">
+<h2 class="text-2xl font-bold text-gray-800">张文杰 <span class="text-sm font-normal text-gray-500 ml-2">男 42岁</span></h2>
+<p class="text-gray-500 mt-1">预约类型：<span class="text-blue-600 font-medium">紧急诊疗子预约</span></p>
+<div class="flex flex-wrap gap-2 mt-3 justify-center md:justify-start">
+<span class="px-3 py-1 bg-blue-50 text-blue-600 rounded-full text-xs">腹部剧痛</span>
+<span class="px-3 py-1 bg-orange-50 text-orange-600 rounded-full text-xs">需转科室</span>
+</div>
+</div>
+<div class="w-full md:w-auto flex flex-col gap-3">
+<button class="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-xl font-semibold shadow-lg shadow-blue-200 transition-all flex items-center justify-center gap-2 group" onclick="showReview('loading')">
+<span class="iconify text-xl group-hover:scale-110 transition-transform" data-icon="solar:bolt-bold"></span>
+                        一键子预约
+                    </button>
+<button class="bg-white border-2 border-blue-600 text-blue-600 hover:bg-blue-50 px-8 py-3 rounded-xl font-semibold transition-all flex items-center justify-center gap-2" onclick="goToStep(2)">
+<span class="iconify text-xl" data-icon="solar:settings-bold"></span>
+                        开启高级选项
+                    </button>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+<div class="md:col-span-2 bg-white rounded-2xl p-6 border border-gray-100">
+<h3 class="font-bold flex items-center gap-2 mb-4">
+<span class="iconify text-blue-500" data-icon="solar:chart-square-bold"></span>
+                        预约流量趋势
+                    </h3>
+<div class="w-full h-[300px]" id="chart-main"></div>
+</div>
+<div class="bg-indigo-600 rounded-2xl p-6 text-white relative overflow-hidden">
+<span class="iconify absolute -right-4 -bottom-4 text-9xl text-white/10" data-icon="solar:shield-check-bold"></span>
+<h3 class="text-lg font-bold">智能陪诊保障</h3>
+<p class="text-sm text-indigo-100 mt-2 leading-relaxed">系统已根据您的历史偏好自动预设高级筛选条件，点击下方按钮可进入自定义调节。</p>
+<button class="mt-6 w-full py-3 bg-white/20 hover:bg-white/30 backdrop-blur-md rounded-xl font-medium transition-all">
+                        查看详情说明
+                    </button>
+</div>
+</div>
+</section>
+<!-- 高级筛选页面 (Step 2) -->
+<section class="hidden animate-fade-in space-y-6" id="step-2">
+<div class="flex items-center justify-between">
+<button class="w-10 h-10 rounded-full bg-white border border-gray-200 flex items-center justify-center hover:bg-gray-100 transition-all shadow-sm" onclick="goToStep(1)">
+<span class="iconify text-xl" data-icon="solar:arrow-left-outline"></span>
+</button>
+<h2 class="text-xl font-bold">高级选项配置</h2>
+<button class="text-blue-600 font-medium">重置全部</button>
+</div>
+<div class="space-y-4">
+<!-- 地点选项 -->
+<div class="bg-white rounded-2xl p-5 border border-gray-100 border-l-4 border-l-blue-500">
+<h3 class="font-bold text-gray-800 mb-4 flex items-center gap-2">
+<span class="iconify text-blue-500" data-icon="solar:map-point-bold"></span>
+                        地点选项
+                    </h3>
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+<button class="filter-btn active py-2 rounded-lg border-2 border-blue-600 bg-blue-50 text-blue-600 text-sm font-medium">全区域</button>
+<button class="filter-btn py-2 rounded-lg border border-gray-200 hover:border-blue-300 text-sm font-medium">罗湖区</button>
+<button class="filter-btn py-2 rounded-lg border border-gray-200 hover:border-blue-300 text-sm font-medium">福田区</button>
+<button class="filter-btn py-2 rounded-lg border border-gray-200 hover:border-blue-300 text-sm font-medium">南山区</button>
+</div>
+</div>
+<!-- 医院等级 -->
+<div class="bg-white rounded-2xl p-5 border border-gray-100 border-l-4 border-l-indigo-500">
+<h3 class="font-bold text-gray-800 mb-4 flex items-center gap-2">
+<span class="iconify text-indigo-500" data-icon="solar:star-bold"></span>
+                        医院级别
+                    </h3>
+<div class="grid grid-cols-3 gap-3">
+<button class="filter-btn active py-3 rounded-lg border-2 border-indigo-600 bg-indigo-50 text-indigo-600 text-sm font-medium flex flex-col items-center">
+<span>三甲医院</span>
+<span class="text-[10px] opacity-70">最高专家级</span>
+</button>
+<button class="filter-btn py-3 rounded-lg border border-gray-200 hover:border-indigo-300 text-sm font-medium flex flex-col items-center">
+<span>乡镇医疗</span>
+<span class="text-[10px] opacity-70">响应速度快</span>
+</button>
+<button class="filter-btn py-3 rounded-lg border border-gray-200 hover:border-indigo-300 text-sm font-medium flex flex-col items-center">
+<span>合作诊所</span>
+<span class="text-[10px] opacity-70">流程最简</span>
+</button>
+</div>
+</div>
+<!-- 急诊科目 -->
+<div class="bg-white rounded-2xl p-5 border border-gray-100 border-l-4 border-l-pink-500">
+<h3 class="font-bold text-gray-800 mb-4 flex items-center gap-2">
+<span class="iconify text-pink-500" data-icon="solar:health-bold"></span>
+                        急诊科目选项
+                    </h3>
+<div class="flex flex-wrap gap-2">
+<button class="px-5 py-2 rounded-full border border-gray-200 hover:bg-gray-50 text-sm">内科</button>
+<button class="px-5 py-2 rounded-full bg-pink-100 text-pink-700 border border-pink-200 text-sm font-semibold">外科</button>
+<button class="px-5 py-2 rounded-full border border-gray-200 hover:bg-gray-50 text-sm">妇产科</button>
+<button class="px-5 py-2 rounded-full border border-gray-200 hover:bg-gray-50 text-sm">儿科</button>
+<button class="px-5 py-2 rounded-full border border-gray-200 hover:bg-gray-50 text-sm">骨科</button>
+</div>
+</div>
+<!-- 收费价位 -->
+<div class="bg-white rounded-2xl p-5 border border-gray-100 border-l-4 border-l-emerald-500">
+<h3 class="font-bold text-gray-800 mb-2 flex items-center justify-between">
+<span class="flex items-center gap-2">
+<span class="iconify text-emerald-500" data-icon="solar:wad-of-money-bold"></span>
+                            收费价位选项
+                        </span>
+<span class="text-xs font-normal text-gray-400">滑动查看价位分布</span>
+</h3>
+<div class="w-full h-[120px]" id="chart-price"></div>
+<div class="flex justify-between items-center mt-2 px-2">
+<span class="text-xs text-gray-500">10 CNY</span>
+<div class="flex-1 mx-4 h-1 bg-gray-100 rounded-full relative">
+<div class="absolute left-1/4 right-1/4 h-full bg-emerald-500 rounded-full"></div>
+</div>
+<span class="text-xs text-gray-500">1000+ CNY</span>
+</div>
+</div>
+</div>
+<button class="w-full bg-blue-600 text-white py-4 rounded-xl font-bold shadow-xl shadow-blue-100 sticky bottom-4" onclick="goToStep(3)">
+                确认并前往发送审核
+            </button>
+</section>
+<!-- 信息确认页 (Step 3) -->
+<section class="hidden animate-fade-in space-y-6" id="step-3">
+<div class="flex items-center gap-4">
+<button class="text-gray-400 hover:text-gray-600" onclick="goToStep(2)">
+<span class="iconify text-2xl" data-icon="solar:arrow-left-outline"></span>
+</button>
+<h2 class="text-xl font-bold">核对发送信息</h2>
+</div>
+<div class="bg-white rounded-2xl overflow-hidden shadow-sm border border-gray-100">
+<div class="bg-blue-600 px-6 py-4 text-white flex justify-between items-center">
+<span class="font-semibold">高级筛选摘要</span>
+<span class="text-xs bg-white/20 px-2 py-1 rounded">配置已锁定</span>
+</div>
+<div class="p-6 space-y-4">
+<div class="flex justify-between border-b border-gray-50 pb-3">
+<span class="text-gray-500 text-sm">匹配区域</span>
+<span class="font-medium">全区域覆盖</span>
+</div>
+<div class="flex justify-between border-b border-gray-50 pb-3">
+<span class="text-gray-500 text-sm">首选等级</span>
+<span class="font-medium text-indigo-600">三甲级医院</span>
+</div>
+<div class="flex justify-between border-b border-gray-50 pb-3">
+<span class="text-gray-500 text-sm">预约科目</span>
+<span class="font-medium">急诊：外科</span>
+</div>
+<div class="flex justify-between">
+<span class="text-gray-500 text-sm">预算阈值</span>
+<span class="font-medium text-emerald-600">100 - 500 CNY</span>
+</div>
+</div>
+</div>
+<div class="bg-blue-50 border border-blue-100 rounded-xl p-4 flex gap-3">
+<span class="iconify text-blue-500 text-xl flex-shrink-0" data-icon="solar:info-circle-bold"></span>
+<p class="text-xs text-blue-700 leading-relaxed">此请求将发送至系统后台进行审核匹配，预计耗时 <span class="font-bold">2-5分钟</span>。审核通过后将通过短信及应用内通知反馈。</p>
+</div>
+<div class="grid grid-cols-2 gap-4">
+<button class="py-4 rounded-xl border-2 border-gray-200 text-gray-500 font-bold hover:bg-gray-50 transition-all" onclick="goToStep(1)">取消预约</button>
+<button class="py-4 rounded-xl bg-blue-600 text-white font-bold shadow-lg shadow-blue-200 hover:bg-blue-700 transition-all" onclick="showReview('loading')">发送审核</button>
+</div>
+</section>
+</main>
+<!-- 底部状态栏 -->
+<footer class="fixed bottom-0 left-0 right-0 h-12 bg-white border-t border-gray-100 flex items-center justify-center px-6 z-40 text-[10px] text-gray-400">
+<p>© 2025 DIDI MedLink 医疗服务系统 · 数据极速匹配中</p>
+</footer>
+<!-- 反馈层模态框 (Overlay) -->
+<div class="hidden fixed inset-0 bg-gray-900/60 backdrop-blur-sm z-[100] flex items-center justify-center px-4" id="status-overlay">
+<!-- 提交中 -->
+<div class="hidden bg-white rounded-3xl p-8 w-full max-w-sm text-center space-y-6" id="status-loading">
+<div class="relative w-24 h-24 mx-auto">
+<div class="absolute inset-0 rounded-full border-4 border-blue-100"></div>
+<div class="absolute inset-0 rounded-full border-4 border-t-blue-600 animate-spin"></div>
+<div class="absolute inset-0 flex items-center justify-center">
+<span class="iconify text-4xl text-blue-500" data-icon="solar:upload-minimalistic-bold"></span>
+</div>
+</div>
+<div>
+<h3 class="text-xl font-bold">正在发送审核...</h3>
+<p class="text-gray-500 mt-2">请不要关闭页面，我们正在连接最优医疗资源</p>
+</div>
+</div>
+<!-- 成功状态 -->
+<div class="hidden bg-white rounded-3xl p-8 w-full max-w-sm text-center space-y-6" id="status-success">
+<div class="w-20 h-20 bg-green-100 text-green-600 rounded-full flex items-center justify-center mx-auto">
+<span class="iconify text-4xl" data-icon="solar:check-circle-bold"></span>
+</div>
+<div>
+<h3 class="text-xl font-bold text-gray-800">审核已通过</h3>
+<p class="text-gray-500 mt-2">已成功匹配到符合条件的“深圳市第一人民医院(三甲)”，请前往处理。</p>
+</div>
+<button class="w-full bg-green-600 text-white py-3 rounded-xl font-bold shadow-lg shadow-green-100" onclick="closeStatus()">查看行程详情</button>
+</div>
+<!-- 驳回状态 (Error Handling) -->
+<div class="hidden bg-white rounded-3xl p-8 w-full max-w-md text-center space-y-6" id="status-error">
+<div class="w-20 h-20 bg-orange-100 text-orange-600 rounded-full flex items-center justify-center mx-auto">
+<span class="iconify text-4xl" data-icon="solar:danger-bold"></span>
+</div>
+<div>
+<h3 class="text-xl font-bold text-gray-800">简约信息发送有误</h3>
+<p class="text-gray-500 mt-2">审核部门反馈：由于您的急诊科目选择与历史病历信息不符，请重新补填精确信息。</p>
+</div>
+<div class="flex gap-3">
+<button class="flex-1 border border-gray-200 py-3 rounded-xl font-bold text-gray-400" onclick="closeStatus()">撤销请求</button>
+<button class="flex-1 bg-orange-500 text-white py-3 rounded-xl font-bold shadow-lg shadow-orange-100" onclick="goToStep(2);closeStatus()">补填信息</button>
+</div>
+</div>
+<!-- 无结果 -->
+<div class="hidden bg-white rounded-3xl p-8 w-full max-w-sm text-center space-y-6" id="status-empty">
+<div class="w-20 h-20 bg-gray-100 text-gray-400 rounded-full flex items-center justify-center mx-auto">
+<span class="iconify text-4xl" data-icon="solar:confounded-square-bold"></span>
+</div>
+<div>
+<h3 class="text-xl font-bold text-gray-800">暂无符合项</h3>
+<p class="text-gray-500 mt-2">在您的预算范围内（100-200）未匹配到空余三甲床位，建议调整价位范围。</p>
+</div>
+<button class="w-full bg-blue-600 text-white py-3 rounded-xl font-bold" onclick="goToStep(2);closeStatus()">调整筛选条件</button>
+</div>
+</div>
+<script>
+        // 页面跳转逻辑
+        function goToStep(step) {
+            document.getElementById('step-1').classList.add('hidden');
+            document.getElementById('step-2').classList.add('hidden');
+            document.getElementById('step-3').classList.add('hidden');
+            document.getElementById('step-' + step).classList.remove('hidden');
+            window.scrollTo({top: 0, behavior: 'smooth'});
+            
+            // 延迟加载图表确保容器尺寸正确
+            if(step === 1) setTimeout(initMainChart, 100);
+            if(step === 2) setTimeout(initPriceChart, 100);
+        }
+
+        // 模拟审核流程提示
+        function showReview(type) {
+            const overlay = document.getElementById('status-overlay');
+            const loading = document.getElementById('status-loading');
+            const success = document.getElementById('status-success');
+            const error = document.getElementById('status-error');
+            const empty = document.getElementById('status-empty');
+
+            overlay.classList.remove('hidden');
+            loading.classList.remove('hidden');
+            success.classList.add('hidden');
+            error.classList.add('hidden');
+            empty.classList.add('hidden');
+
+            // 模拟 1.5秒 后反馈结果
+            setTimeout(() => {
+                loading.classList.add('hidden');
+                // 随机切换三种反馈，模拟真实情况
+                const roll = Math.random();
+                if(roll > 0.6) success.classList.remove('hidden');
+                else if(roll > 0.3) error.classList.remove('hidden');
+                else empty.classList.remove('hidden');
+            }, 1500);
+        }
+
+        function closeStatus() {
+            document.getElementById('status-overlay').classList.add('hidden');
+        }
+
+        // 数据图表初始化
+        function initMainChart() {
+            const chartDom = document.getElementById('chart-main');
+            if(!chartDom) return;
+            const myChart = echarts.init(chartDom);
+            const option = {
+                grid: { left: '3%', right: '4%', bottom: '3%', top: '10%', containLabel: true },
+                xAxis: { type: 'category', data: ['08:00', '10:00', '12:00', '14:00', '16:00', '18:00'], axisLine: {show: false} },
+                yAxis: { type: 'value', axisLine: {show: false}, splitLine: {lineStyle: {type: 'dashed'}} },
+                series: [{
+                    data: [150, 230, 224, 218, 135, 147],
+                    type: 'line',
+                    smooth: true,
+                    color: '#3B82F6',
+                    areaStyle: { color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{offset: 0, color: 'rgba(59, 130, 246, 0.3)'}, {offset: 1, color: 'rgba(59, 130, 246, 0)'}]) }
+                }]
+            };
+            myChart.setOption(option);
+        }
+
+        function initPriceChart() {
+            const chartDom = document.getElementById('chart-price');
+            if(!chartDom) return;
+            const myChart = echarts.init(chartDom);
+            const option = {
+                grid: { left: 0, right: 0, top: 10, bottom: 0 },
+                xAxis: { type: 'category', show: false },
+                yAxis: { type: 'value', show: false },
+                series: [{
+                    data: [20, 40, 60, 100, 80, 50, 30, 10],
+                    type: 'bar',
+                    itemStyle: {
+                        color: function(params) {
+                            return params.dataIndex >= 2 && params.dataIndex <= 5 ? '#10B981' : '#E5E7EB';
+                        },
+                        borderRadius: [4, 4, 0, 0]
+                    }
+                }]
+            };
+            myChart.setOption(option);
+        }
+
+        // 初始化
+        window.onload = () => {
+            initMainChart();
+        };
+    </script>
+</body>
+</html>
